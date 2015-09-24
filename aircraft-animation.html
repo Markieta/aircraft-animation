@@ -3,26 +3,48 @@
 <body>
 
 <!-- Remove border on deployment -->
-<canvas id="canvas" width="300" height="150" style="border:1px solid;" />
+<canvas id="canvas" width="800" height="400" style="border:1px solid;" />
 
 <script>
 
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
+var dx = 0, dy = 0;
 
-context.beginPath();
-context.moveTo(0, 0);
-context.lineTo(45, 60);
-context.lineTo(220, 75);
-context.lineTo(285, 50);
-context.lineTo(285, 30);
-context.lineTo(245, 30);
-context.lineTo(225, 10);
-context.lineTo(65, 35);
-context.lineTo(40, 5);
-context.closePath();
-context.stroke();
-context.fill();
+function draw(dx, dy)
+{
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.translate(dx, dy);
+
+    context.beginPath();
+    context.moveTo(0, 0);
+    context.lineTo(15, 20);
+    context.lineTo(73, 25);
+    context.lineTo(95, 16);
+    context.lineTo(95, 10);
+    context.lineTo(81, 10);
+    context.lineTo(75, 3);
+    context.lineTo(21, 11);
+    context.lineTo(13, 1);
+    context.closePath();
+    context.stroke();
+    context.fill();
+
+    context.translate(-dx, -dy);
+}
+
+function executeFrame()
+{
+    if(dx > canvas.width)  dx = 0;
+    else                   dx++;
+    
+    if(dy > canvas.height) dy = 0;
+    else if(dx % 18 == 0)  dy++;
+
+    draw(dx, dy);
+}
+
+setInterval(function(){executeFrame();}, 20);
 
 </script>
 
