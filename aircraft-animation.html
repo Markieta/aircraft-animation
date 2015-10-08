@@ -2,10 +2,21 @@
 <html>
 <body>
 
-<!-- Remove border on deployment -->
-<canvas id="canvas" width="800" height="400" style="border:1px solid;"></canvas>
+<div style="text-align: center;">
+  <div style="display: inline-block; margin: 20px; font-size: 40px;">
+      High Pressure
+      Or
+      High Temp
+  </div>
+  <canvas id="canvas" width="800" height="400" style="border:1px solid;"></canvas>
+  <div style="display: inline-block; margin: 20px; font-size: 40px;">
+      Low Pressure
+      Or
+      Low Temp
+  </div>
+</div>
 
-<div style="text-align: left;">
+<div style="text-align: center;">
   <div id="pressure"    style="display: inline-block; margin: 20px; font-size: 40px">5000 ft</div>
   <div id="temperature" style="display: inline-block; margin: 20px; font-size: 40px; color: #FF0000">30 &degC</div>
 </div>
@@ -16,7 +27,7 @@ var canvas      = document.getElementById("canvas");
 var context     = canvas.getContext("2d");
 var dx          = 0;
 var dy          = 0;
-var pause       = 0;
+var pause       = 200;
 var maxWidth    = canvas.width - 95;
 var temperature = 30;   // Celsius
 var pressure    = 5000; // Foot pressure level
@@ -30,6 +41,7 @@ function draw(dx, dy)
 
     context.beginPath();
     context.moveTo(0, 0);
+
     context.lineTo(15, 20);
     context.lineTo(73, 25);
     context.lineTo(95, 16);
@@ -38,7 +50,7 @@ function draw(dx, dy)
     context.lineTo(75, 3);
     context.lineTo(21, 11);
     context.lineTo(13, 1);
-    context.closePath();
+
     context.stroke();
     context.fill();
 
@@ -47,19 +59,7 @@ function draw(dx, dy)
 
 function executeFrame()
 {
-    if(dx > maxWidth)
-    {
-        dx = dy     = 0;
-        pressure    = 5000;
-        temperature = 30;
-        red         = 255;
-        blue        = 0;
-
-        document.getElementById("pressure").innerHTML    = pressure    + " ft";
-        document.getElementById("temperature").innerHTML = temperature + " &degC";
-        document.getElementById("temperature").style.color = "rgb(" + red + ", 0," + blue + ")";
-    }
-    else
+    if(dx < maxWidth)
     {
         dx++;
 
@@ -72,6 +72,23 @@ function executeFrame()
             temperature--;
             red  -= 8;
             blue += 8;
+            document.getElementById("temperature").innerHTML   = temperature + " &degC";
+            document.getElementById("temperature").style.color = "rgb(" + red + ", 0," + blue + ")";
+        }
+    }
+    else
+    {
+        if(pause) pause--;
+        else
+        {
+            dx = dy     = 0;
+            pressure    = 5000;
+            temperature = 30;
+            red         = 255;
+            blue        = 0;
+            pause       = 200;
+
+            document.getElementById("pressure").innerHTML    = pressure    + " ft";
             document.getElementById("temperature").innerHTML = temperature + " &degC";
             document.getElementById("temperature").style.color = "rgb(" + red + ", 0," + blue + ")";
         }
