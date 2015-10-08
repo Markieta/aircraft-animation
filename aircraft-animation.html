@@ -3,9 +3,12 @@
 <body>
 
 <!-- Remove border on deployment -->
-<canvas id="canvas" width="800" height="400" style="border:1px solid;" />
-<div id="pressure"></div>
-<div id="temperature"></div>
+<canvas id="canvas" width="800" height="400" style="border:1px solid;"></canvas>
+
+<div style="text-align: left;">
+  <div id="pressure"    style="display: inline-block; margin: 20px; font-size: 40px">5000 ft</div>
+  <div id="temperature" style="display: inline-block; margin: 20px; font-size: 40px; color: #FF0000">30 &degC</div>
+</div>
 
 <script>
 
@@ -17,6 +20,8 @@ var pause       = 0;
 var maxWidth    = canvas.width - 95;
 var temperature = 30;   // Celsius
 var pressure    = 5000; // Foot pressure level
+var red         = 255;
+var blue        = 0;
 
 function draw(dx, dy)
 {
@@ -47,19 +52,28 @@ function executeFrame()
         dx = dy     = 0;
         pressure    = 5000;
         temperature = 30;
+        red         = 255;
+        blue        = 0;
+
+        document.getElementById("pressure").innerHTML    = pressure    + " ft";
+        document.getElementById("temperature").innerHTML = temperature + " &degC";
+        document.getElementById("temperature").style.color = "rgb(" + red + ", 0," + blue + ")";
     }
     else
     {
         dx++;
 
         pressure -= 4;
-        document.getElementById("pressure").innerHTML = pressure;
+        document.getElementById("pressure").innerHTML = pressure + " ft";
 
         if(dx %  4 == 0) dy++;
         if(dx % 23 == 0)
         {
             temperature--;
-            document.getElementById("temperature").innerHTML = temperature;
+            red  -= 8;
+            blue += 8;
+            document.getElementById("temperature").innerHTML = temperature + " &degC";
+            document.getElementById("temperature").style.color = "rgb(" + red + ", 0," + blue + ")";
         }
     }
 
