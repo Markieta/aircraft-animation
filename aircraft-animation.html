@@ -4,12 +4,19 @@
 
 <!-- Remove border on deployment -->
 <canvas id="canvas" width="800" height="400" style="border:1px solid;" />
+<div id="pressure"></div>
+<div id="temperature"></div>
 
 <script>
 
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
-var dx = 0, dy = 0;
+var canvas      = document.getElementById("canvas");
+var context     = canvas.getContext("2d");
+var dx          = 0;
+var dy          = 0;
+var pause       = 0;
+var maxWidth    = canvas.width - 95;
+var temperature = 30;   // Celsius
+var pressure    = 5000; // Foot pressure level
 
 function draw(dx, dy)
 {
@@ -35,11 +42,26 @@ function draw(dx, dy)
 
 function executeFrame()
 {
-    if(dx > canvas.width)  dx = 0;
-    else                   dx++;
-    
-    if(dy > canvas.height) dy = 0;
-    else if(dx % 18 == 0)  dy++;
+    if(dx > maxWidth)
+    {
+        dx = dy     = 0;
+        pressure    = 5000;
+        temperature = 30;
+    }
+    else
+    {
+        dx++;
+
+        pressure -= 4;
+        document.getElementById("pressure").innerHTML = pressure;
+
+        if(dx %  4 == 0) dy++;
+        if(dx % 23 == 0)
+        {
+            temperature--;
+            document.getElementById("temperature").innerHTML = temperature;
+        }
+    }
 
     draw(dx, dy);
 }
