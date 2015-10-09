@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+div.row
+{
+    text-align: center;
+}
+div div
+{
+    display: inline-block;
+    margin: 20px;
+    font-size: 20px;
+    border: 1px solid;
+    padding: 5px;
+    vertical-align: middle;
+}
+</style>
+</head>
 <body>
 
-<div style="text-align: center;">
-  <div style="display: inline-block; margin: 20px; font-size: 40px;">
-      High Pressure
-      Or
-      High Temp
+<div class="row">
+  <div>
+      High Pressure<br />
+      Or<br />
+      High Temp<br />
   </div>
-  <canvas id="canvas" width="800" height="400" style="border:1px solid;"></canvas>
-  <div style="display: inline-block; margin: 20px; font-size: 40px;">
-      Low Pressure
-      Or
-      Low Temp
+  <canvas id="canvas" width="800" height="400" style="vertical-align: middle;"></canvas>
+  <div>
+      Low Pressure<br />
+      Or<br />
+      Low Temp<br />
   </div>
 </div>
 
-<div style="text-align: center;">
-  <div id="pressure"    style="display: inline-block; margin: 20px; font-size: 40px">5000 ft</div>
-  <div id="temperature" style="display: inline-block; margin: 20px; font-size: 40px; color: #FF0000">30 &degC</div>
+<div class="row">
+  <div id="pressure">5000 ft</div>
+  <div id="temperature" style="color: #FF0000">30 &degC</div>
 </div>
 
 <script>
