@@ -2,38 +2,39 @@
 <html>
 <head>
 <style>
-div.row
+div.rowContainer
 {
     text-align: center;
 }
-div div
+div div.boxContainer, div#pressure, div#temperature
 {
+    width: 120px;
     display: inline-block;
-    margin: 20px;
-    font-size: 20px;
+    margin: 5px;
+    font-size: 16px;
     border: 1px solid;
-    padding: 5px;
+    padding: 2px;
     vertical-align: middle;
 }
 </style>
 </head>
 <body>
 
-<div class="row">
-  <div>
+<div class="rowContainer">
+  <div class="boxContainer">
       High Pressure<br />
       Or<br />
       High Temp<br />
   </div>
-  <canvas id="canvas" width="800" height="400" style="vertical-align: middle;"></canvas>
-  <div>
+  <canvas id="canvas" width="370" height="100" style="vertical-align: middle;"></canvas>
+  <div class="boxContainer">
       Low Pressure<br />
       Or<br />
       Low Temp<br />
   </div>
 </div>
 
-<div class="row">
+<div class="rowContainer">
   <div id="pressure">5000 ft</div>
   <div id="temperature" style="color: #FF0000">30 &degC</div>
 </div>
@@ -80,11 +81,11 @@ function executeFrame()
     {
         dx++;
 
-        pressure -= 4;
+        pressure -= 9;
         document.getElementById("pressure").innerHTML = pressure + " ft";
 
-        if(dx %  4 == 0) dy++;
-        if(dx % 23 == 0)
+        if(dx % 4 == 0) dy++;
+        if(dx % 9 == 0)
         {
             temperature--;
             red  -= 8;
