@@ -35,22 +35,25 @@ div div.boxContainer, div#pressure, div#temperature
 </div>
 
 <div class="rowContainer">
-  <div id="pressure">5000 ft</div>
+  <div id="pressure">29.00 inHg</div>
   <div id="temperature" style="color: #FF0000">30 &degC</div>
 </div>
 
 <script>
 
-var canvas      = document.getElementById("canvas");
-var context     = canvas.getContext("2d");
-var dx          = 0;
-var dy          = 0;
-var pause       = 200;
-var maxWidth    = canvas.width - 95;
-var temperature = 30;   // Celsius
-var pressure    = 5000; // Foot pressure level
-var red         = 255;
-var blue        = 0;
+var canvas           = document.getElementById("canvas");
+var context          = canvas.getContext("2d");
+var dx               = 0;
+var dy               = 0;
+var pause            = 200;
+var maxWidth         = canvas.width - 95;
+var startTemperature = 30;    // Celsius
+var endTemperature   = 0;     // Celsius
+var diffTemperature  = startTemperature - endTemperature;
+var startPressure    = 29.00; // inHg
+var endPressure      = 25.00; // inHg
+var diffPressure     = startPressure - endPressure;
+var maxRGB           = 255;   // RGB Value
 
 function draw(dx, dy)
 {
@@ -81,34 +84,26 @@ function executeFrame()
     {
         dx++;
 
-        pressure -= 9;
-        document.getElementById("pressure").innerHTML = pressure + " ft";
-
         if(dx % 4 == 0) dy++;
-        if(dx % 9 == 0)
-        {
-            temperature--;
-            red  -= 8;
-            blue += 8;
-            document.getElementById("temperature").innerHTML   = temperature + " &degC";
-            document.getElementById("temperature").style.color = "rgb(" + red + ", 0," + blue + ")";
-        }
+
+        var progress = dx / maxWidth;
+
+        var pressure    = (startPressure - diffPressure * progress).toFixed(2);
+        var temperature = startTemperature - Math.round(diffTemperature * progress);
+        var blue        = Math.round(maxRGB * progress);
+        var red         = maxRGB - blue;
+
+        document.getElementById("pressure").innerHTML = pressure + " inHg";
+        document.getElementById("temperature").innerHTML   = temperature + " &degC";
+        document.getElementById("temperature").style.color = "rgb(" + red + ", 0," + blue + ")";
     }
     else
     {
         if(pause) pause--;
         else
         {
-            dx = dy     = 0;
-            pressure    = 5000;
-            temperature = 30;
-            red         = 255;
-            blue        = 0;
-            pause       = 200;
-
-            document.getElementById("pressure").innerHTML    = pressure    + " ft";
-            document.getElementById("temperature").innerHTML = temperature + " &degC";
-            document.getElementById("temperature").style.color = "rgb(" + red + ", 0," + blue + ")";
+            dx = dy = 0;
+            pause   = 200;
         }
     }
 
