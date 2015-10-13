@@ -8,12 +8,12 @@ div.rowContainer
 }
 div div.boxContainer, div#pressure, div#temperature
 {
-    width: 124px;
-    display: inline-block;
-    margin: 5px;
-    font-size: 16px;
-    border: 1px solid;
-    padding: 2px;
+    width:          124px;
+    font-size:      16px;
+    border:         1px solid;
+    margin:         5px;
+    padding:        2px;
+    display:        inline-block;
     vertical-align: middle;
 }
 </style>
@@ -43,9 +43,9 @@ div div.boxContainer, div#pressure, div#temperature
 
 var canvas           = document.getElementById("canvas");
 var context          = canvas.getContext("2d");
-var dx               = 0;
-var dy               = 0;
-var pause            = 200;
+var dx               = 0;     // Current horizontal pixel location
+var dy               = 0;     // Current vertical pixel location
+var pause            = 200;   // Wait after animation ends based on interval
 var maxWidth         = canvas.width - 95;
 var startTemperature = 30;    // Celsius
 var endTemperature   = 0;     // Celsius
@@ -86,8 +86,7 @@ function executeFrame()
 
         if(dx % 4 == 0) dy++;
 
-        var progress = dx / maxWidth;
-
+        var progress    = dx / maxWidth;
         var pressure    = (startPressure - diffPressure * progress).toFixed(2);
         var temperature = startTemperature - Math.round(diffTemperature * progress);
         var blue        = Math.round(maxRGB * progress);
